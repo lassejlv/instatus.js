@@ -23,8 +23,15 @@ class InstatusClient {
     });
   }
 
-  async returnApiKey() {
-    return this.apiKey;
+  async getUserProfile() {
+    const response = await this.httpClient.get("/user");
+
+    // Error handling
+    if (response.data.error) {
+      throw new Error(response.data.error);
+    } else {
+      return response.data;
+    }
   }
 
   // get pages
@@ -99,8 +106,116 @@ class InstatusClient {
     }
   }
 
-  // create incident
+  // get subscribers
+  async getSubscribers() {
+    const response = await this.httpClient.get(`/${this.pageId}/subscribers`);
 
+    // Error handling
+    if (response.data.error) {
+      throw new Error(response.data.error);
+    } else {
+      return response.data;
+    }
+  }
+
+  // add subscriber
+  async addSubscriber(options) {
+    if (!options) {
+      throw new Error("addSubscriber requires options");
+    } else if (!options.email) {
+      throw new Error("addSubscriber requires an email");
+    } else {
+      try {
+        const response = await this.httpClient.post(
+          `/${this.pageId}/subscribers`,
+          {
+            email: options.email,
+            all: options.all || false,
+            autoConfirm: options.autoConfirm || false,
+          }
+        );
+
+        return response.data;
+      } catch (error) {
+        console.error("Error adding subscriber:", error.response.data);
+
+        throw new Error("Failed to add subscriber");
+      }
+    }
+  }
+
+  // delete subscriber
+  async deleteSubscriber(subscriberId) {
+    if (!subscriberId) {
+      throw new Error("deleteSubscriber requires a subscriberId");
+    } else {
+      try {
+        const response = await this.httpClient.delete(
+          `/${this.pageId}/subscribers/${subscriberId}`
+        );
+
+        return response.data;
+      } catch (error) {
+        console.error("Error deleting subscriber:", error.response.data);
+
+        throw new Error("Failed to delete subscriber");
+      }
+    }
+  }
+
+  // get teammates
+  async getTeammates() {
+    const response = await this.httpClient.get(`/${this.pageId}/team`);
+
+    // Error handling
+    if (response.data.error) {
+      throw new Error(response.data.error);
+    } else {
+      return response.data;
+    }
+  }
+
+  // add teammate
+  async addTeammate(options) {
+    if (!options) {
+      throw new Error("addTeammate requires options");
+    } else if (!options.email) {
+      throw new Error("addTeammate requires an email");
+    } else {
+      try {
+        const response = await this.httpClient.post(`/${this.pageId}/team`, {
+          email: options.email,
+        });
+
+        return response.data;
+      } catch (error) {
+        console.error("Error adding teammate:", error.response.data);
+
+        throw new Error("Failed to add teammate");
+      }
+    }
+  }
+
+  // remove teammate
+  async removeTeammate(teammateId) {
+    if (!teammateId) {
+      throw new Error("removeTeammate requires a teammateId");
+    } else {
+      try {
+        const response = await this.httpClient.delete(
+          `/${this.pageId}/team/${teammateId}`
+        );
+
+        return response.data;
+      } catch (error) {
+        console.error("Error removing teammate:", error.response.data);
+
+        throw new Error("Failed to remove teammate");
+      }
+    }
+  }
+
+  // create incident
   async createIncident(options) {
     if (!options) {
       throw new Error("createIncident requires options");

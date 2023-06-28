@@ -1,3 +1,7 @@
+# Instatus.js
+
+A simple and easy to use wrapper for the Instatus API.
+
 # Creating your client
 
 ```js
@@ -77,5 +81,84 @@ const client = new InstatusClient({
 
   console.log(createIncident);
   // returns the created incident
+})();
+```
+
+# Get user profile
+
+```js
+(async () => {
+  const getUserProfile = await client.getUserProfile();
+
+  console.log(getUserProfile);
+  // returns the user profile
+})();
+```
+
+# Get subscribers
+
+```js
+(async () => {
+  const getSubscribers = await client.getSubscribers(); // this uses the pageId from the client
+
+  console.log(getSubscribers);
+  // returns an array of subscribers
+})();
+```
+
+# Add a subscriber
+
+```js
+(async () => {
+  const addSubscriber = await client.addSubscriber({
+    email: "my_freind@gmail.com", // the email of the subscriber
+    all: true,
+    autoConfirm: false, // set to true to skip confirmation emails (paid feature), visit https://instatus.com/pricing for more info
+  }); // this uses the pageId from the client
+
+  console.log(addSubscriber);
+})();
+```
+
+# Delete a subscriber
+
+```js
+(async () => {
+  const removeSubscriber = await client.deleteSubscriber("<subscriber-id>"); // this uses the pageId from the client, and use .getSubscribers() to get your subscriber ID
+
+  console.log(removeSubscriber);
+})();
+```
+
+# Get teammates
+
+```js
+(async () => {
+  const getTeammates = await client.getTeammates(); // this uses the pageId from the client
+
+  console.log(getTeammates);
+  // returns an array of teammates
+})();
+```
+
+# Add a teammate
+
+```js
+(async () => {
+  const addTeammate = await client.addTeammate({
+    email: "my_freind@gmail.com", // the email of the teammate
+  }); // this uses the pageId from the client
+
+  console.log(addTeammate);
+})();
+```
+
+# Remove a teammate
+
+```js
+(async () => {
+  const removeTeammate = await client.deleteTeammate("<teammate-id>"); // this uses the pageId from the client, and use .getTeammates() to get your teammate ID
+
+  console.log(removeTeammate);
 })();
 ```

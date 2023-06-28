@@ -6,13 +6,7 @@ const client = new InstatusClient({
 });
 
 (async () => {
-  const getData = await client.createIncident({
-    name: "Test Incident from code2",
-    status: "INVESTIGATING", // INVESTIGATING, IDENTIFIED, MONITORING, RESOLVED
-    message: "This is a test incident",
-    components: ["cljg3124r457545b1n3zzdubchq"],
-    statuses: [], // optional
-  });
+  const getData = await client.removeTeammate("clfqw5wyp101055vgonlxz43riv");
 
   console.log(getData);
 })();
