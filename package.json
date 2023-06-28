@@ -1,0 +1,12 @@
+{
+  "name": "instatus.js",
+  "version": "0.0.1",
+  "description": "A simple wrapper for the Instatus API",
+  "main": "src/index.js",
+  "repository": "https://github.com/latze05/instatus.js.git",
+  "author": "Lasse Vestergaard",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
